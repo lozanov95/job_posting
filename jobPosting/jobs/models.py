@@ -24,6 +24,11 @@ class JobPosting(models.Model):
         on_delete=models.CASCADE,
     )
     description = models.TextField()
+    city = models.CharField(
+        max_length=15,
+        null=False,
+        blank=False,
+    )
     applicants = models.IntegerField(
         default=0,
     )

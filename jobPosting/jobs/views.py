@@ -15,7 +15,7 @@ def index(request):
 
 class CreateJobPostingView(CreateView):
     model = JobPosting
-    fields = ['title', 'category', 'description']
+    fields = ['title', 'category', 'description', 'city']
     template_name = 'jobs/create_job.html'
     success_url = reverse_lazy('job list')
 
