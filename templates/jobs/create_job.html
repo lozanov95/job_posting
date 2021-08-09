@@ -1,6 +1,7 @@
 {% extends 'shared/base.html' %}
 
 {% block content %}
+    <h1>Submit new job posting</h1>
     <form action="{% url 'job create' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
