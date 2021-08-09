@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav>
+    <a href="{% url 'job list' %}">Home</a>
+    <a href="{% url 'job create' %}">Post a new job</a>
+    <a href="{% url 'sign up' %}">Register</a>
+    <a href="{% url 'sign in' %}">Login</a>
+    <a href="{% url 'sign out' %}">Logout</a>
+</nav>
+{% block content %}
+{% endblock %}
+</body>
+</html>

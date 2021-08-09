@@ -1,0 +1,12 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+    <div>
+        {{ object.title }}
+    </div>
+    <div>
+        {{ object.description }}
+    </div>
+    {% if object.posted_by == request.user %}
+        <a href="{% url 'job delete' object.id %}">Delete</a>
+    {% endif %}
+{% endblock %}
