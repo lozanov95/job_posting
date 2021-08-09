@@ -7,10 +7,14 @@
 <body>
 <nav>
     <a href="{% url 'job list' %}">Home</a>
-    <a href="{% url 'job create' %}">Post a new job</a>
-    <a href="{% url 'sign up' %}">Register</a>
-    <a href="{% url 'sign in' %}">Login</a>
-    <a href="{% url 'sign out' %}">Logout</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'job create' %}">Post a new job</a>
+        <a href="{% url 'sign out' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'sign up' %}">Register</a>
+        <a href="{% url 'sign in' %}">Login</a>
+    {% endif %}
+
 </nav>
 {% block content %}
 {% endblock %}
