@@ -1,1 +1,10 @@
 {% extends 'shared/base.html' %}
+
+{% block content %}
+    <h1>Sign-up</h1>
+    <form action="{% url 'sign up' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button>Sign-up</button>
+    </form>
+{% endblock %}
