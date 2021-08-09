@@ -7,7 +7,7 @@ from jobPosting.jobs.views import ListJobPostingsView, DetailsJobPostingView, \
 urlpatterns = (
     path('', index, name='index'),
     path('list/', ListJobPostingsView.as_view(), name='job list'),
-    path('create/', login_required(CreateJobPostingView.as_view(), reverse_lazy('job list')), name='job create'),
+    path('create/', login_required(CreateJobPostingView.as_view(), reverse_lazy('sign in')), name='job create'),
     path('details/<int:pk>', DetailsJobPostingView.as_view(), name='job details'),
     path('delete/<int:pk>', DeleteJobPostingView.as_view(), name='job delete'),
 )
