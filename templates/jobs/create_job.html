@@ -3,7 +3,7 @@
 {% block content %}
     <form action="{% url 'job create' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_p }}
         <button>Submit</button>
     </form>
 {% endblock %}
