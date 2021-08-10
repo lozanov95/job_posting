@@ -12,7 +12,9 @@
         {{ object.city }}
     </div>
     {% if object.posted_by == request.user %}
-        <a href="{% url 'job delete' object.id %}">Delete</a>
-        <a href="{% url 'job edit' object.id %}">Edit</a>
+        <a href="{% url 'job delete' object.id %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'job edit' object.id %}" class="btn btn-dark">Edit</a>
+    {% else %}
+        <a href="#" class="btn btn-dark">Apply</a>
     {% endif %}
 {% endblock %}
