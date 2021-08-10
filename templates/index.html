@@ -3,4 +3,9 @@
 {% block content %}
     <h1>Welcome to the job post site.</h1>
     <p>If you want to submit a new job posting, you will have to sign-in first.</p>
+
+    <h2>Last 5 job postings:</h2>
+    {% for job in jobs %}
+        <p>{{ job.title }} - {{ job.city }}</p>
+    {% endfor %}
 {% endblock %}

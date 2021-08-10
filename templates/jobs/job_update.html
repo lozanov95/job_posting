@@ -1,0 +1,8 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+    <form action="{% url 'job edit' object.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button>Save</button>
+    </form>
+{% endblock %}

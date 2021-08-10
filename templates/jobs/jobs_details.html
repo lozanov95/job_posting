@@ -13,5 +13,6 @@
     </div>
     {% if object.posted_by == request.user %}
         <a href="{% url 'job delete' object.id %}">Delete</a>
+        <a href="{% url 'job edit' object.id %}">Edit</a>
     {% endif %}
 {% endblock %}
