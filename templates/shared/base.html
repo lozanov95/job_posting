@@ -23,6 +23,7 @@
                 {% if user.is_authenticated %}
                     <a class="nav-link" href="{% url 'job my postings' %}">My Postings</a>
                     <a class="nav-link" href="{% url 'job create' %}">Post a new job</a>
+                    <a class="nav-link" href="{% url 'my applications list' %}">My Applications</a>
                     <a class="nav-link" href="{% url 'sign out' %}">Sign-out</a>
                     <a class="nav-link" href="{% url 'profile details' %}">Profile</a>
                 {% else %}

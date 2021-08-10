@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 
-from jobPosting.jobs.models import JobPosting
+from jobPosting.jobs.forms import ApplyForm
+from jobPosting.jobs.models import JobPosting, Applicant
 
 UserModel = get_user_model()
 
@@ -69,3 +70,54 @@ class MyJobsView(ListView):
     def get_queryset(self):
         queryset = JobPosting.objects.filter(posted_by=self.request.user)
         return queryset
+
+
+def apply_view(request, pk):
+    if request.POST:
+        job = JobPosting.objects.get(pk=pk)
+
+        form = ApplyForm(request.POST)
+    form = ApplyForm()
+    context = {
+        'form': form,
+        'pk': pk
+    }
+    return render(request, 'jobs/apply.html', context)
+
+
+class SubmitApplicationView(CreateView):
+    model = Applicant
+    template_name = 'jobs/apply.html'
+    fields = ['cv']
+    success_url = reverse_lazy('success')
+
+    def get(self, request, *args, **kwargs):
+        """
+        Overriding get, so I could pass the pk on the get request
+        """
+        self.request.pk = kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        job = JobPosting.objects.get(pk=self.kwargs['pk'])
+        application = Applicant.objects.filter(applicant=self.request.user, job_application=job)
+        if application:
+            return HttpResponseBadRequest('You already applied for this job!')
+        form.instance.job_application = job
+        form.instance.applicant = self.request.user
+        return super().form_valid(form)
+
+
+def success_view(request):
+    return render(request, 'shared/success.html')
+
+
+class ListMyApplicationsView(ListView):
+    model = Applicant
+    template_name = 'jobs/list_jobs.html'
+    extra_context = {'heading': 'My applications'}
+
+    def get_queryset(self):
+        applications = Applicant.objects.filter(applicant=self.request.user).select_related('job_application')
+        jobs = [job.job_application for job in applications]
+        return jobs

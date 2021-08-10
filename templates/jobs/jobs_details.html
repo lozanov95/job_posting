@@ -15,6 +15,6 @@
         <a href="{% url 'job delete' object.id %}" class="btn btn-danger">Delete</a>
         <a href="{% url 'job edit' object.id %}" class="btn btn-dark">Edit</a>
     {% else %}
-        <a href="#" class="btn btn-dark">Apply</a>
+        <a href="{% url 'job apply' object.id %}" class="btn btn-dark">Apply</a>
     {% endif %}
 {% endblock %}
