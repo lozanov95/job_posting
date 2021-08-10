@@ -33,6 +33,9 @@ class ListJobPostingsView(ListView):
     template_name = 'jobs/list_jobs.html'
     extra_context = {'heading': 'Job postings:'}
 
+    def get_queryset(self):
+        return JobPosting.objects.all().order_by('-posted_on')
+
 
 class DetailsJobPostingView(DetailView):
     model = JobPosting
