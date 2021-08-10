@@ -121,3 +121,12 @@ class ListMyApplicationsView(ListView):
         applications = Applicant.objects.filter(applicant=self.request.user).select_related('job_application')
         jobs = [job.job_application for job in applications]
         return jobs
+
+
+class ListApplicantsView(ListView):
+    model = Applicant
+    template_name = 'jobs/applicants_list.html'
+
+    def get_queryset(self):
+        queryset = Applicant.objects.filter(job_application__id=self.kwargs.get('pk')).select_related('applicant')
+        return queryset

@@ -3,7 +3,7 @@ from django.urls import path, reverse_lazy
 
 from jobPosting.jobs.views import ListJobPostingsView, DetailsJobPostingView, \
     CreateJobPostingView, DeleteJobPostingView, index, EditJobPostingView, MyJobsView, apply_view, \
-    SubmitApplicationView, success_view, ListMyApplicationsView
+    SubmitApplicationView, success_view, ListMyApplicationsView, ListApplicantsView
 
 urlpatterns = (
     path('', index, name='index'),
@@ -17,6 +17,7 @@ urlpatterns = (
 
     path('apply/<int:pk>', SubmitApplicationView.as_view(), name='job apply'),
     path('my_aplications/', ListMyApplicationsView.as_view(), name='my applications list'),
+    path('applicants/<int:pk>', ListApplicantsView.as_view(), name='applications list'),
 
     path('success/', success_view, name='success'),
 )

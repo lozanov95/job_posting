@@ -1,0 +1,8 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+    <h1>Applicants</h1>
+    {% for object in object_list %}
+        {{ object.applicant }}
+    {% endfor %}
+{% endblock %}

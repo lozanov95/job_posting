@@ -14,6 +14,7 @@
     {% if object.posted_by == request.user %}
         <a href="{% url 'job delete' object.id %}" class="btn btn-danger">Delete</a>
         <a href="{% url 'job edit' object.id %}" class="btn btn-dark">Edit</a>
+        <a href="{% url 'applications list' object.id %}" class="btn btn-dark">View applicants</a>
     {% else %}
         <a href="{% url 'job apply' object.id %}" class="btn btn-dark">Apply</a>
     {% endif %}
