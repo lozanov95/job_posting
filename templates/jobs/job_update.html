@@ -3,6 +3,6 @@
     <form action="{% url 'job edit' object.id %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button>Save</button>
+        <button class="btn btn-dark">Save</button>
     </form>
 {% endblock %}

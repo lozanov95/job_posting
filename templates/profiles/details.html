@@ -5,6 +5,6 @@
     <form action="{% url 'profile details' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button>Save</button>
+        <button class="btn btn-dark">Save</button>
     </form>
 {% endblock %}

@@ -5,6 +5,6 @@
     <form action="{% url 'job create' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button>Submit</button>
+        <button class="btn btn-dark">Submit</button>
     </form>
 {% endblock %}
