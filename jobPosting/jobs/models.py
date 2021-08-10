@@ -1,5 +1,3 @@
-from builtins import print
-
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -29,9 +27,6 @@ class JobPosting(models.Model):
         null=False,
         blank=False,
     )
-    applicants = models.IntegerField(
-        default=0,
-    )
     posted_by = models.ForeignKey(
         to=UserModel,
         on_delete=models.CASCADE,
@@ -47,3 +42,17 @@ class JobPosting(models.Model):
 
     def __str__(self):
         return f"{self.category} - {self.title}"
+
+
+class Applicant(models.Model):
+    applicant = models.ForeignKey(
+        to=UserModel,
+        on_delete=models.CASCADE,
+    )
+    job_application = models.ForeignKey(
+        to=JobPosting,
+        on_delete=models.CASCADE,
+    )
+    cv = models.FileField(
+        upload_to='media'
+    )
