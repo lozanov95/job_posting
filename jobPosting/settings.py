@@ -127,5 +127,8 @@ STATICFILES_DIRS = (
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
 LOGIN_URL = reverse_lazy('sign in')
 AUTH_USER_MODEL = 'job_auth.JobsUser'
