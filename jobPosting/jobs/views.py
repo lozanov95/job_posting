@@ -72,19 +72,6 @@ class MyJobsView(ListView):
         return queryset
 
 
-def apply_view(request, pk):
-    if request.POST:
-        job = JobPosting.objects.get(pk=pk)
-
-        form = ApplyForm(request.POST)
-    form = ApplyForm()
-    context = {
-        'form': form,
-        'pk': pk
-    }
-    return render(request, 'jobs/apply.html', context)
-
-
 class SubmitApplicationView(CreateView):
     model = Applicant
     template_name = 'jobs/apply.html'

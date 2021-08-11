@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import path, reverse_lazy
 
 from jobPosting.jobs.views import ListJobPostingsView, DetailsJobPostingView, \
-    CreateJobPostingView, DeleteJobPostingView, index, EditJobPostingView, MyJobsView, apply_view, \
+    CreateJobPostingView, DeleteJobPostingView, index, EditJobPostingView, MyJobsView, \
     SubmitApplicationView, success_view, ListMyApplicationsView, ListApplicantsView
 
 urlpatterns = (
