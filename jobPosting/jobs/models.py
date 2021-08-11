@@ -56,3 +56,6 @@ class Applicant(models.Model):
     cv = models.FileField(
         upload_to='media'
     )
+
+    def __str__(self):
+        return f'{self.job_application} - {self.applicant}'
