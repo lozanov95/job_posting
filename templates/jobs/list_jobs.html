@@ -1,26 +1,5 @@
 {% extends 'shared/base.html' %}
 {% block content %}
     <h2>{{ heading }}</h2>
-    <div class="container">
-        {% if object_list %}
-            {% for job in object_list %}
-                <div class="row">
-                    <div class="col-md-4">
-                        {{ job.title }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ job.city }}
-                    </div>
-                    <div class="col-md-3">
-                        {{ job.posted_on }}
-                    </div>
-                    <div class="col">
-                        <a class="btn btn-primary" href="{% url 'job details' job.id %}">Details</a>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No job postings.</p>
-        {% endif %}
-    </div>
+    {% include 'shared/jobs_list_partial.html' %}
 {% endblock %}

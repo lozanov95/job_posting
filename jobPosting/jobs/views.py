@@ -4,7 +4,6 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 
-from jobPosting.jobs.forms import ApplyForm
 from jobPosting.jobs.models import JobPosting, Applicant
 
 UserModel = get_user_model()
@@ -13,7 +12,7 @@ UserModel = get_user_model()
 def index(request):
     jobs = JobPosting.objects.all().order_by('-posted_on')[:5]
     context = {
-        'jobs': jobs,
+        'object_list': jobs,
     }
     return render(request, 'index.html', context)
 
