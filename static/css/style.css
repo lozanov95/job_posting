@@ -1,6 +1,17 @@
-.row{
-    margin-bottom: 5px;
+.row {
+    border-radius: 7px;
+    margin-bottom: 2px;
+    font-weight: 600;
 }
+
 nav {
     margin-bottom: 20px;
+}
+
+.row:nth-of-type(odd) {
+    background-color: #a2a282;
+}
+
+.row:nth-of-type(even){
+    background-color: #e0e0ad;
 }
