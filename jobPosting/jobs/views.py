@@ -104,7 +104,8 @@ class ListMyApplicationsView(ListView):
     extra_context = {'heading': 'My applications'}
 
     def get_queryset(self):
-        applications = Applicant.objects.filter(applicant=self.request.user).select_related('job_application')
+        applications = Applicant.objects.filter(applicant=self.request.user).select_related('job_application') \
+            .order_by('-applied_on')
         jobs = [job.job_application for job in applications]
         return jobs
 
