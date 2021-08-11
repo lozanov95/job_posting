@@ -1,5 +1,14 @@
 <div class="container">
     {% if object_list %}
+        <div class="row grid-header">
+            <div class="col-md-4">
+                Position
+            </div>
+            <div class="col-md-2">
+                City
+            </div>
+            <div class="col-md-3">Posted on</div>
+        </div>
         {% for job in object_list %}
             <div class="row">
                 <div class="col-md-4">

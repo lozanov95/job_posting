@@ -8,10 +8,16 @@ nav {
     margin-bottom: 20px;
 }
 
+
 .row:nth-of-type(odd) {
     background-color: #a2a282;
 }
 
-.row:nth-of-type(even){
+.row:nth-of-type(even) {
     background-color: #e0e0ad;
+}
+
+.grid-header {
+    font-size: 25px;
+    font-weight: 700;
 }
