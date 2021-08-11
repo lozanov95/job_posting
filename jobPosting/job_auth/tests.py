@@ -1,9 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
-from jobPosting.job_auth.models import JobsUser
 
 
-# Create your tests here.
 class AuthTestCase(TestCase):
     """
     Testing the sign-up and sign-in functionalities
