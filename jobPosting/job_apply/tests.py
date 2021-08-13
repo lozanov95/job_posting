@@ -10,6 +10,10 @@ UserModel = get_user_model()
 
 
 class ApplicantTestCase(TestCase):
+    """
+    Testing the application process
+    """
+
     def setUp(self) -> None:
         self.c = Client()
         self.email_job_poster = 'job_poster@gmail.com'
