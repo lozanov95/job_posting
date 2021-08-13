@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
+from django.urls import reverse_lazy
 
 
 class AuthTestCase(TestCase):
@@ -12,21 +13,19 @@ class AuthTestCase(TestCase):
         self.c = Client()
         self.email = 'test@abv.bg'
         self.pwd = 'Qwerty1234!'
-        self.sign_up_endpoint = '/auth/sign-up/'
-        self.sign_in_endpoint = '/auth/sign-in/'
 
     def test_register(self):
         login_data = {'email': self.email, 'password1': self.pwd, 'password2': self.pwd}
-        self.c.post(self.sign_up_endpoint, login_data)
+        self.c.post(reverse_lazy('sign up'), login_data)
         self.assertTrue(self.UserModel.objects.filter(email=self.email).exists())
 
     def test_register_short_pwd(self):
         email = 'test_fail@abv.bg'
         pwd = 'q!'
         login_data = {'email': email, 'password1': pwd, 'password2': pwd}
-        self.c.post(self.sign_up_endpoint, login_data)
+        self.c.post(reverse_lazy('sign up'), login_data)
         self.assertFalse(self.UserModel.objects.filter(email=self.email).exists())
 
     def test_login(self):
-        response = self.c.post(self.sign_in_endpoint, {'email': self.email, 'password': self.pwd})
+        response = self.c.post(reverse_lazy('sign in'), {'email': self.email, 'password': self.pwd})
         self.assertNotContains(response, 'Incorrect')
