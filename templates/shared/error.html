@@ -1,0 +1,7 @@
+{% extends 'shared/base.html' %}
+{% block content %}
+    <h1>Error!</h1>
+    {% for error in error_text %}
+        <p>{{ error }}</p>
+    {% endfor %}
+{% endblock %}
