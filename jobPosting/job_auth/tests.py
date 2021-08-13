@@ -18,16 +18,14 @@ class AuthTestCase(TestCase):
     def test_register(self):
         login_data = {'email': self.email, 'password1': self.pwd, 'password2': self.pwd}
         self.c.post(self.sign_up_endpoint, login_data)
-        user = self.UserModel.objects.filter(email=self.email)
-        self.assertEqual(len(user), 1)
+        self.assertTrue(self.UserModel.objects.filter(email=self.email).exists())
 
     def test_register_short_pwd(self):
         email = 'test_fail@abv.bg'
         pwd = 'q!'
         login_data = {'email': email, 'password1': pwd, 'password2': pwd}
         self.c.post(self.sign_up_endpoint, login_data)
-        user = self.UserModel.objects.filter(email=email)
-        self.assertEqual(len(user), 0)
+        self.assertFalse(self.UserModel.objects.filter(email=self.email).exists())
 
     def test_login(self):
         response = self.c.post(self.sign_in_endpoint, {'email': self.email, 'password': self.pwd})
