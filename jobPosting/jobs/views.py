@@ -1,5 +1,4 @@
 from django.contrib.auth import get_user_model
-from django.http import HttpResponseForbidden, HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
@@ -83,12 +82,15 @@ class DeleteJobPostingView(DeleteView):
         """
         Checking if the user doing the request is the original poster.
         If True - Deletes the posting
-        If False - Returning Forbidden
+        If False - Returning error view
         """
         posting = JobPosting.objects.get(pk=kwargs.get('pk'))
         if request.user == posting.posted_by:
             return super().delete(request, *args, **kwargs)
-        return HttpResponseForbidden('You are not authorized to perform this action!')
+        context = {
+            'error_text': 'You are not authorized to perform this action'
+        }
+        return render(request, 'shared/error.html', context)
 
 
 class MyJobsView(ListView):
