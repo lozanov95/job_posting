@@ -120,12 +120,29 @@ class SubmitApplicationView(CreateView):
     def form_valid(self, form):
         """
         Matching the user and the job posting.
-        Returns bad request if the user has already applied.
+        Returns error view in the following cases:
+            - User have already applied
+            - User is the job poster
+            - The file extension is not in the allowed extensions list
         """
+        allowed_extensions = ['pdf', 'docx']
+        context = {
+            "error_text": [],
+        }
+        file_ext = form.instance.cv.name.split('.')[-1]
         job = JobPosting.objects.get(pk=self.kwargs['pk'])
         application = Applicant.objects.filter(applicant=self.request.user, job_application=job)
+
         if application:
-            return HttpResponseBadRequest('You already applied for this job!')
+            context['error_text'].append('You have already applied for this job.')
+        if self.request.user == job.posted_by:
+            context['error_text'].append('You cannot apply for a job that you have submitted.')
+        if file_ext not in allowed_extensions:
+            context['error_text'].append(
+                f'This extension is not supported! You must use only the following extensions {", ".join(allowed_extensions)}.')
+        if len(context['error_text']) > 0:
+            return render(self.request, 'shared/error.html', context)
+
         form.instance.job_application = job
         form.instance.applicant = self.request.user
         return super().form_valid(form)
