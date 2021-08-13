@@ -1,9 +1,9 @@
 from django.contrib.auth.decorators import login_required
-from django.urls import path, reverse_lazy
+from django.urls import path
 
 from jobPosting.jobs.views import ListJobPostingsView, DetailsJobPostingView, \
     CreateJobPostingView, DeleteJobPostingView, index, EditJobPostingView, MyJobsView, \
-    SubmitApplicationView, success_view, ListMyApplicationsView, ListApplicantsView
+    success_view
 
 urlpatterns = (
     path('', index, name='index'),
@@ -14,10 +14,6 @@ urlpatterns = (
     path('details/<int:pk>', DetailsJobPostingView.as_view(), name='job details'),
     path('update/<int:pk>', login_required(EditJobPostingView.as_view()), name='job edit'),
     path('delete/<int:pk>', login_required(DeleteJobPostingView.as_view()), name='job delete'),
-
-    path('apply/<int:pk>', login_required(SubmitApplicationView.as_view()), name='job apply'),
-    path('my_aplications/', login_required(ListMyApplicationsView.as_view()), name='my applications list'),
-    path('applicants/<int:pk>', login_required(ListApplicantsView.as_view()), name='applications list'),
 
     path('success/', success_view, name='success'),
 )

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'jobPosting.jobs',
     'jobPosting.profiles',
     'jobPosting.job_auth',
+    'jobPosting.job_apply',
 ]
 
 MIDDLEWARE = [
