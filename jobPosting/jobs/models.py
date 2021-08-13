@@ -54,7 +54,7 @@ class Applicant(models.Model):
         on_delete=models.CASCADE,
     )
     cv = models.FileField(
-        upload_to='media',
+        upload_to='applicant_cv',
     )
     applied_on = models.DateTimeField(
         auto_now_add=True,
