@@ -3,6 +3,11 @@
 {% block content %}
     <h1>Applicants</h1>
     {% for object in object_list %}
-        {{ object.applicant }}
+        <div class="row">
+            <div class="col-md-3">{{ object.applicant }}</div>
+            <div class="col-md-3">
+                <a href="{{ object.cv.url }}" download="">Download CV</a>
+            </div>
+        </div>
     {% endfor %}
 {% endblock %}
