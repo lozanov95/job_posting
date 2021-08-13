@@ -1,5 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from jobPosting.jobs.models import JobCategory, JobPosting
+
+UserModel = get_user_model()
 
 
 class JobPostingTestCase(TestCase):
@@ -11,50 +14,56 @@ class JobPostingTestCase(TestCase):
         """
         Configuring the commonly used vars
         """
-
         email = 'test@abv.bg'
         pwd = 'Qwerty1234!'
         category_name = 'IT - Software'
-        JobCategory(name=category_name).save()
-
-        self.create_endpoint = '/create/'
-        self.job_object = {'title': 'test name', 'category': 1, 'description': 'test description',
-                           'city': 'test city'}
 
         self.c = Client()
         self.c.post('/auth/sign-up/', {'email': email, 'password1': pwd, 'password2': pwd})
         self.c.post('/auth/sign-in/', {'email': email, 'password': pwd})
+        JobCategory(name=category_name).save()
+        JobPosting(
+            title='title 1',
+            description='description 1',
+            city='City 1',
+            category=JobCategory.objects.first(),
+            posted_by=UserModel.objects.first(),
+        ).save()
+        self.user = UserModel.objects.first()
+        self.category = JobCategory.objects.first()
 
     def test_create_posting(self):
-        self.c.post(self.create_endpoint, self.job_object)
-        self.assertEqual(len(JobPosting.objects.filter(title=self.job_object.get('title'))), 1)
+        job_title = 'title_new'
+        self.c.post('/create/',
+                    {'title': job_title, 'description': 'desc 2', 'city': 'c2',
+                     'category': self.category.id})
+        self.assertTrue(JobPosting.objects.filter(title=job_title).exists())
 
     def test_details_post(self):
-        self.c.post(self.create_endpoint, self.job_object)
-        response = self.c.get('/details/1')
-        self.assertContains(response, self.job_object['title'])
+        job = JobPosting.objects.first()
+        response = self.c.get(f'/details/{job.id}')
+        self.assertContains(response, job.title)
 
     def test_edit_post(self):
-        new_object = self.job_object
-        new_object['title'] = 'edited title'
-        self.c.post(self.create_endpoint, self.job_object)
-        self.c.post('/update/1', new_object)
-        self.assertEqual(len(JobPosting.objects.filter(title=new_object['title'])), 1)
+        job = JobPosting.objects.first()
+        job.title = 'new_title'
+        self.c.post(f'/update/{job.id}',
+                    {'title': job.title, 'description': job.description, 'city': job.city, 'category': job.category.id})
+        self.assertTrue(JobPosting.objects.filter(title=job.title).exists())
 
     def test_delete_post(self):
-        self.c.post(self.create_endpoint, self.job_object)
-        self.assertEqual(len(JobPosting.objects.filter(title=self.job_object['title'])), 1,
-                         'The object was not created')
-        self.c.post('/delete/1')
-        self.assertEqual(len(JobPosting.objects.filter(title=self.job_object['title'])), 0,
-                         'The object was not deleted')
+        job = JobPosting.objects.first()
+        self.c.post(f'/delete/{job.id}')
+        self.assertFalse(JobPosting.objects.filter(pk=job.id).exists())
 
     def test_my_jobs(self):
-        self.c.post(self.create_endpoint, self.job_object)
+        job_title = 'my jobs t'
+        self.c.post('/create/', {'title': job_title, 'description': 'my jobs d', 'city': 'my jobs c',
+                                 'category': self.category.id})
         response = self.c.get('/my_jobs/')
-        self.assertContains(response, self.job_object['title'])
+        self.assertContains(response, job_title)
 
     def test_job_list(self):
-        self.c.post(self.create_endpoint, self.job_object)
+        job = JobPosting.objects.first()
         response = self.c.get('/list/')
-        self.assertContains(response, self.job_object['title'])
+        self.assertContains(response, job.title)
