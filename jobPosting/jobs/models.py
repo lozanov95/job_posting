@@ -10,6 +10,7 @@ class JobCategory(models.Model):
     """
     name = models.CharField(
         max_length=20,
+        unique=True,
     )
 
     def __str__(self):
@@ -48,4 +49,3 @@ class JobPosting(models.Model):
 
     def __str__(self):
         return f"{self.category} - {self.title}"
-
