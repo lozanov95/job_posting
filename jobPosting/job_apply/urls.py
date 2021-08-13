@@ -5,7 +5,7 @@ from jobPosting.job_apply.views import SubmitApplicationView, ListMyApplications
 
 urlpatterns = (
     path('apply/<int:pk>', login_required(SubmitApplicationView.as_view()), name='job apply'),
-    path('my_aplications/', login_required(ListMyApplicationsView.as_view()), name='my applications list'),
+    path('my_applications/', login_required(ListMyApplicationsView.as_view()), name='my applications list'),
     path('applicants/<int:pk>', login_required(ListApplicantsView.as_view()), name='applications list'),
 
 )
