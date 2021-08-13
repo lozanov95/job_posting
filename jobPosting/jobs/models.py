@@ -5,6 +5,9 @@ UserModel = get_user_model()
 
 
 class JobCategory(models.Model):
+    """
+    Job categories model. Could be updated only in the Administration panel.
+    """
     name = models.CharField(
         max_length=20,
     )
@@ -14,6 +17,9 @@ class JobCategory(models.Model):
 
 
 class JobPosting(models.Model):
+    """
+    The Job Posting model. It represents a single job posting.
+    """
     title = models.CharField(
         max_length=30,
     )
@@ -45,6 +51,9 @@ class JobPosting(models.Model):
 
 
 class Applicant(models.Model):
+    """
+    This model represents a single job application.
+    """
     applicant = models.ForeignKey(
         to=UserModel,
         on_delete=models.CASCADE,

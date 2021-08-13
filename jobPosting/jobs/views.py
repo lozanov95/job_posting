@@ -10,6 +10,10 @@ UserModel = get_user_model()
 
 
 def index(request):
+    """
+    Displaying the index page.
+    Shows the last 5 job postings.
+    """
     jobs = JobPosting.objects.all().order_by('-posted_on')[:5]
     context = {
         'object_list': jobs,
@@ -18,31 +22,49 @@ def index(request):
 
 
 class CreateJobPostingView(CreateView):
+    """
+    Creating a new job posting.
+    """
     model = JobPosting
     fields = ['title', 'category', 'description', 'city']
     template_name = 'jobs/create_job.html'
     success_url = reverse_lazy('job list')
 
     def form_valid(self, form):
+        """
+        Setting the current user as the one that posted the job.
+        """
         form.instance.posted_by = self.request.user
         return super().form_valid(form)
 
 
 class ListJobPostingsView(ListView):
+    """
+    Displays all job postings.
+    """
     model = JobPosting
     template_name = 'jobs/list_jobs.html'
     extra_context = {'heading': 'Job postings:'}
 
     def get_queryset(self):
+        """
+        Ordering by time_posted in descending order
+        """
         return JobPosting.objects.all().order_by('-posted_on')
 
 
 class DetailsJobPostingView(DetailView):
+    """
+    Showing the details of a job posting
+    """
     model = JobPosting
     template_name = 'jobs/jobs_details.html'
 
 
 class EditJobPostingView(UpdateView):
+    """
+    View for editing a job posting.
+    """
     model = JobPosting
     fields = ['title', 'category', 'description', 'city']
     template_name = 'jobs/job_update.html'
@@ -50,11 +72,19 @@ class EditJobPostingView(UpdateView):
 
 
 class DeleteJobPostingView(DeleteView):
+    """
+    Deletes a job posting
+    """
     model = JobPosting
     template_name = 'jobs/confirm_delete.html'
     success_url = reverse_lazy('job list')
 
     def delete(self, request, *args, **kwargs):
+        """
+        Checking if the user doing the request is the original poster.
+        If True - Deletes the posting
+        If False - Returning Forbidden
+        """
         posting = JobPosting.objects.get(pk=kwargs.get('pk'))
         if request.user == posting.posted_by:
             return super().delete(request, *args, **kwargs)
@@ -62,6 +92,9 @@ class DeleteJobPostingView(DeleteView):
 
 
 class MyJobsView(ListView):
+    """
+    Showing the job postings the current user
+    """
     model = JobPosting
     template_name = 'jobs/list_jobs.html'
     extra_context = {'heading': 'My job postings:'}
@@ -85,6 +118,10 @@ class SubmitApplicationView(CreateView):
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
+        """
+        Matching the user and the job posting.
+        Returns bad request if the user has already applied.
+        """
         job = JobPosting.objects.get(pk=self.kwargs['pk'])
         application = Applicant.objects.filter(applicant=self.request.user, job_application=job)
         if application:
@@ -99,11 +136,17 @@ def success_view(request):
 
 
 class ListMyApplicationsView(ListView):
+    """
+    Showing the applications of the current user
+    """
     model = Applicant
     template_name = 'jobs/list_jobs.html'
     extra_context = {'heading': 'My applications'}
 
     def get_queryset(self):
+        """
+        Filtering the queryset, so only the results of the current user are shown
+        """
         applications = Applicant.objects.filter(applicant=self.request.user).select_related('job_application') \
             .order_by('-applied_on')
         jobs = [job.job_application for job in applications]
@@ -111,6 +154,9 @@ class ListMyApplicationsView(ListView):
 
 
 class ListApplicantsView(ListView):
+    """
+    Displaying list of applicants for the job posting.
+    """
     model = Applicant
     template_name = 'jobs/applicants_list.html'
 

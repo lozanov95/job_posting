@@ -5,6 +5,9 @@ from django.db import models
 
 
 class JobsUserManager(BaseUserManager):
+    """
+    Custom UserManager model
+    """
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
@@ -34,6 +37,9 @@ class JobsUserManager(BaseUserManager):
 
 
 class JobsUser(AbstractBaseUser, PermissionsMixin):
+    """
+    Extended user model to use email for sign-in.
+    """
     email = models.EmailField(
         unique=True,
     )
