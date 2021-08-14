@@ -9,11 +9,11 @@ nav {
 }
 
 
-.row:nth-of-type(odd) {
+.grid-row:nth-of-type(odd) {
     background-color: #a2a282;
 }
 
-.row:nth-of-type(even) {
+.grid-row:nth-of-type(even) {
     background-color: #e0e0ad;
 }
 

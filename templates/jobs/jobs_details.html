@@ -1,15 +1,18 @@
 {% extends 'shared/base.html' %}
 {% block content %}
-    <div>
-        <h3>
+    <div class="row">
+        <h2>
             {{ object.title }}
-        </h3>
+        </h2>
     </div>
-    <div>
-        {{ object.description }}
+    <div class="row">
+        <h4>Description</h4>
+        <p>
+            {{ object.description }}
+        </p>
     </div>
-    <div>
-        {{ object.city }}
+    <div class="row">
+        <p>City: {{ object.city }}</p>
     </div>
     {% if object.posted_by == request.user %}
         <a href="{% url 'job delete' object.id %}" class="btn btn-danger">Delete</a>
