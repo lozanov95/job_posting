@@ -26,3 +26,7 @@ nav {
     box-shadow: 5px 5px 15px 5px #000000;
     padding: 15px;
 }
+.nav-img{
+    height: 30px;
+    width: 30px;
+}
