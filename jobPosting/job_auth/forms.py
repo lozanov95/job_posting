@@ -7,6 +7,13 @@ UserModel = get_user_model()
 
 
 class SignUpForm(UserCreationForm):
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    password1 = forms.CharField(
+        label='Password',
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    password2 = forms.CharField(label='Repeat Password', widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
     class Meta:
         model = UserModel
         fields = ('email',)
@@ -16,11 +23,12 @@ class SignInForm(forms.Form):
     user = None
 
     email = forms.EmailField(
-        max_length=155
+        max_length=155,
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
     )
     password = forms.CharField(
         max_length=32,
-        widget=forms.PasswordInput(),
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
     def clean_password(self):
