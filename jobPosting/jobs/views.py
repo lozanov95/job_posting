@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DetailView, DeleteView, UpdateView
 
+from jobPosting.jobs.forms import CreateJobPostingForm
 from jobPosting.jobs.models import JobPosting
 
 UserModel = get_user_model()
@@ -25,7 +26,7 @@ class CreateJobPostingView(CreateView):
     Creating a new job posting.
     """
     model = JobPosting
-    fields = ['title', 'category', 'description', 'city']
+    form_class = CreateJobPostingForm
     template_name = 'jobs/create_job.html'
     success_url = reverse_lazy('job list')
 
@@ -65,7 +66,7 @@ class EditJobPostingView(UpdateView):
     View for editing a job posting.
     """
     model = JobPosting
-    fields = ['title', 'category', 'description', 'city']
+    form_class = CreateJobPostingForm
     template_name = 'jobs/job_update.html'
     success_url = reverse_lazy('index')
 
