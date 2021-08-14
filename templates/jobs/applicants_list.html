@@ -2,12 +2,16 @@
 
 {% block content %}
     <h1>Applicants</h1>
-    {% for object in object_list %}
-        <div class="row">
-            <div class="col-md-3">{{ object.applicant }}</div>
-            <div class="col-md-3">
-                <a href="{{ object.cv.url }}" download="">Download CV</a>
+    {% if object_list %}
+        {% for object in object_list %}
+            <div class="row">
+                <div class="col-md-3">{{ object.applicant }}</div>
+                <div class="col-md-3">
+                    <a href="{{ object.cv.url }}" download="">Download CV</a>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>There are no applicants.</p>
+    {% endif %}
 {% endblock %}
