@@ -102,10 +102,9 @@ class MyJobsView(ListView):
     extra_context = {'heading': 'My job postings:'}
 
     def get_queryset(self):
-        queryset = JobPosting.objects.filter(posted_by=self.request.user)
+        queryset = JobPosting.objects.filter(posted_by=self.request.user).order_by('-posted_on')
         return queryset
 
 
 def success_view(request):
     return render(request, 'shared/success.html')
-
