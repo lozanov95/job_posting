@@ -21,3 +21,8 @@ nav {
     font-size: 25px;
     font-weight: 700;
 }
+
+.box-grid {
+    box-shadow: 5px 5px 15px 5px #000000;
+    padding: 15px;
+}

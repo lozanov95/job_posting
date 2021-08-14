@@ -4,8 +4,8 @@
     <h1>Sign-in</h1>
     <form action="{% url 'sign in' %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <button>Sign-in</button>
+        {{ form.as_p }}
+        <button class="btn btn-dark">Sign-in</button>
     </form>
 
     <p>You don't have an account? Sign-up <a href="{% url 'sign up' %}">HERE</a>.</p>
